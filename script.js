@@ -213,25 +213,20 @@ function displayResults(sortedPlayers, totalGames) {
     totalGamesElement.textContent = totalGames;
     
     // Clear previous results
-    playerList.innerHTML = '';
+    tableBody.innerHTML = '';
     
-    // Create player items
+    // Create table rows
     sortedPlayers.forEach((playerData, index) => {
         const [playerName, gameCount] = playerData;
         
-        const playerItem = document.createElement('div');
-        playerItem.className = 'player-item';
+        const row = document.createElement('tr');
         
-        playerItem.innerHTML = `
-            <div class="player-rank">${index + 1}</div>
-            <div class="player-name">${escapeHtml(playerName)}</div>
-            <div class="player-games">
-                <span class="games-number">${gameCount}</span> 
-                game${gameCount === 1 ? '' : 's'}
-            </div>
+        row.innerHTML = `
+            <td class="player-name-cell">${escapeHtml(playerName)}</td>
+            <td class="games-cell">${gameCount}</td>
         `;
         
-        playerList.appendChild(playerItem);
+        tableBody.appendChild(row);
     });
     
     // Show results section
