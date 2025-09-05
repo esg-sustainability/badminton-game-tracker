@@ -10,8 +10,16 @@ resetBtn.addEventListener("click", () => {
   errorOutput.textContent = "";
 });
 
+function cleanLine(line) {
+  return line
+    .replace(/^\s*\d+\.\s*/, '') // Remove numbering like "1. "
+    .replace(/[\u200B-\u200D\uFEFF\u2060]/g, '') // Remove invisible characters
+    .replace(/\s+/g, ' ') // Normalize spaces
+    .trim();
+}
+
 function sanitizeName(name) {
-  return name.replace(/[\u200B-\u200D\uFEFF]/g, "").trim(); // remove zero-width characters
+  return name.replace(/[\u200B-\u200D\uFEFF\u2060]/g, "").trim();
 }
 
 function processGames() {
@@ -21,29 +29,32 @@ function processGames() {
   let errors = [];
 
   lines.forEach((line, idx) => {
-    // Remove numbering like "1. " or "2. "
-    const cleanedLine = line.replace(/^\s*\d+\.\s*/, '').trim();
+    const originalLine = line;
+    const cleanedLine = cleanLine(line);
 
-    const match = cleanedLine.match(/^(.+?)\s+(\d{1,2}-\d{1,2})\s+(.+)$/);
+    // Allow spaces around dash in score: e.g. 21 - 16 or 21-16 or 21 -16
+    const match = cleanedLine.match(/^(.+?)\s+(\d{1,2})\s*-\s*(\d{1,2})\s+(.+)$/);
 
     if (!match) {
-      errors.push(`Line ${idx + 1} is invalid: "${line}"`);
+      errors.push(`Line ${idx + 1} is invalid: "${originalLine}"`);
       return;
     }
 
-    const [_, team1, score, team2] = match;
-    const team1Players = team1.trim().split(/\s+/).map(sanitizeName);
-    const team2Players = team2.trim().split(/\s+/).map(sanitizeName);
+    const team1Raw = match[1];
+    const score = `${match[2]}-${match[3]}`;
+    const team2Raw = match[4];
+
+    const team1Players = team1Raw.trim().split(/\s+/).map(sanitizeName);
+    const team2Players = team2Raw.trim().split(/\s+/).map(sanitizeName);
 
     if (team1Players.length !== 2 || team2Players.length !== 2) {
-      errors.push(`Line ${idx + 1} must have 2 players on each team: "${line}"`);
+      errors.push(`Line ${idx + 1} must have 2 players on each team: "${originalLine}"`);
       return;
     }
 
     [...team1Players, ...team2Players].forEach(player => {
       if (!player) return;
-      const key = player;
-      playerCount[key] = (playerCount[key] || 0) + 1;
+      playerCount[player] = (playerCount[player] || 0) + 1;
     });
   });
 
