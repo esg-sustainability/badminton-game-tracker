@@ -1,4 +1,18 @@
-/* Reset and Base Styles */
+.important-notes {
+        padding: 15px;
+        margin-top: 15px;
+    }
+    
+    .note-item {
+        font-size: 0.9rem;
+        gap: 8px;
+    }
+    
+    .note-number {
+        width: 18px;
+        height: 18px;
+        font-size: 0.75rem;
+    }/* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
