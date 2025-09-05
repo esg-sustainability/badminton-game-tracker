@@ -10,6 +10,10 @@ resetBtn.addEventListener("click", () => {
   errorOutput.textContent = "";
 });
 
+function sanitizeName(name) {
+  return name.replace(/[\u200B-\u200D\uFEFF]/g, "").trim(); // remove zero-width characters
+}
+
 function processGames() {
   const input = gameInput.value.trim();
   const lines = input.split("\n");
@@ -17,7 +21,10 @@ function processGames() {
   let errors = [];
 
   lines.forEach((line, idx) => {
-    const match = line.match(/^(.+?)\s+(\d{1,2}-\d{1,2})\s+(.+)$/);
+    // Remove numbering like "1. " or "2. "
+    const cleanedLine = line.replace(/^\s*\d+\.\s*/, '').trim();
+
+    const match = cleanedLine.match(/^(.+?)\s+(\d{1,2}-\d{1,2})\s+(.+)$/);
 
     if (!match) {
       errors.push(`Line ${idx + 1} is invalid: "${line}"`);
@@ -25,8 +32,8 @@ function processGames() {
     }
 
     const [_, team1, score, team2] = match;
-    const team1Players = team1.trim().split(/\s+/);
-    const team2Players = team2.trim().split(/\s+/);
+    const team1Players = team1.trim().split(/\s+/).map(sanitizeName);
+    const team2Players = team2.trim().split(/\s+/).map(sanitizeName);
 
     if (team1Players.length !== 2 || team2Players.length !== 2) {
       errors.push(`Line ${idx + 1} must have 2 players on each team: "${line}"`);
@@ -34,7 +41,9 @@ function processGames() {
     }
 
     [...team1Players, ...team2Players].forEach(player => {
-      playerCount[player] = (playerCount[player] || 0) + 1;
+      if (!player) return;
+      const key = player;
+      playerCount[key] = (playerCount[key] || 0) + 1;
     });
   });
 
