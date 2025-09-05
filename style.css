@@ -336,12 +336,45 @@ footer {
         text-align: center;
     }
     
-    .player-item {
-        padding: 15px 20px;
+    .results-table th,
+    .results-table td {
+        padding: 12px 15px;
+        font-size: 0.95rem;
     }
     
-    .player-name {
-        font-size: 1.1rem;
-        margin-left: 15px;
+    .results-table th {
+        font-size: 1rem;
+    }
+    
+    .rank-header {
+        width: 60px;
+    }
+    
+    .player-header {
+        min-width: 150px;
+    }
+    
+    .games-header {
+        width: 120px;
+    }
+    
+    .rank-badge {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+    
+    .rank-badge {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+    
+    .player-name-cell {
+        font-size: 1rem;
+    }
+    
+    .games-cell {
+        font-size: 1rem;
     }
 }
