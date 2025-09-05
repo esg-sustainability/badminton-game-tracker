@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Badminton Game Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🏸 Badminton Game Tracker</h1>
+    <p class="subtitle">Paste your game results below to track how many games each player has played.</p>
+    
+    <textarea id="gameInput" placeholder="Paste your game results here..."></textarea>
+    
+    <div class="buttons">
+      <button id="resetBtn">Reset</button>
+    </div>
+
+    <div id="errorOutput"></div>
+    
+    <div id="result">
+      <h2>🎯 Player Game Counts</h2>
+      <ul id="playerCounts"></ul>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
