@@ -4,86 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Badminton Game Counter</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="header-icon">🏸</div>
-            <h1>Badminton Game Counter</h1>
-            <p class="subtitle">Track your doubles games effortlessly</p>
-            <div class="important-notes">
-                <div class="note-title">📝 Important Notes:</div>
-                <div class="note-items">
-                    <div class="note-item">
-                        <span class="note-number">1.</span>
-                        Copy and paste the players' names and scores. Nothing else is allowed.
-                    </div>
-                    <div class="note-item">
-                        <span class="note-number">2.</span>
-                        Only <strong>ONE word name</strong> is allowed. For example: Ang, Alvan, KKK. 
-                        <br><strong>TWO word names</strong> like Jason T, Hsieh Ying, Wei Ling are <strong>NOT allowed</strong>.
-                    </div>
-                </div>
-            </div>
+            <h1>🏸 Badminton Game Counter</h1>
+            <p>Paste your game log from WhatsApp below. The stats will update automatically.</p>
         </header>
-
-        <div class="input-section">
-            <label for="gameInput" class="input-label">
-                Paste your game results here
-                <span class="format-hint">Format: "Player1 Player2 21-12 Player3 Player4"</span>
-            </label>
-            <textarea 
-                id="gameInput" 
-                placeholder="Example:&#10;1. Alvan Ang 21-12 Desment Jason&#10;2. Anthony Miao 21-15 Ong Nic&#10;3. Alvan Jason 21-18 Ang Desment"
-                rows="12"
-            ></textarea>
-            <div class="button-group">
-                <button id="countButton" class="btn btn-primary">
-                    <span class="btn-icon">📊</span>
-                    Count Games
-                </button>
-                <button id="resetButton" class="btn btn-secondary">
-                    <span class="btn-icon">🔄</span>
-                    Reset
-                </button>
-            </div>
+        
+        <div class="input-area">
+            <textarea id="game-log" placeholder="e.g.,&#10;1. Alvan Ang 21-12 Desment Jason&#10;2. Anthony Miao 21-15 Ong Nic"></textarea>
+            <button id="reset-button">Reset</button>
         </div>
 
-        <div id="errorSection" class="error-section hidden">
-            <div class="error-content">
-                <div class="error-icon">⚠️</div>
-                <div class="error-text"></div>
-            </div>
-        </div>
+        <div id="error-display"></div>
 
-        <div id="resultsSection" class="results-section hidden">
-            <div class="results-header">
-                <h2>Game Statistics</h2>
-                <div class="total-games">
-                    Total Games: <span id="totalGames">0</span>
-                </div>
-            </div>
-            <div class="table-container">
-                <table id="resultsTable" class="results-table">
-                    <thead>
-                        <tr>
-                            <th class="player-header">Player Name</th>
-                            <th class="games-header">Total Games</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
+        <div class="results-area">
+            <h2>Game Statistics</h2>
+            <table id="stats-table">
+                <thead>
+                    <tr>
+                        <th>Player Name</th>
+                        <th>Total Games</th>
+                    </tr>
+                </thead>
+                <tbody>
                     </tbody>
-                </table>
-            </div>
+            </table>
         </div>
-
-        <footer>
-            <p>Made with ❤️ for badminton enthusiasts</p>
-        </footer>
     </div>
 
     <script src="script.js"></script>
