@@ -25,9 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         lines.forEach((rawLine, index) => {
             // 1. Clean the line
-            // - Strip leading number (e.g., "1. ")
-            // - **FIX: Remove a wider range of invisible Unicode characters**
-            // - Trim whitespace
             let cleanedLine = rawLine
                 .replace(/^\s*\d+\.\s*/, '')
                 .replace(/[\u200B-\u200F\u202A-\u202E\u2060-\u206F\uFEFF]/g, '') 
@@ -42,8 +39,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const scoreMatch = cleanedLine.match(scoreRegex);
             
             if (!scoreMatch) {
+                // ✅ NEW: Accept lines with exactly 4 player names (no score)
+                const players = cleanedLine.split(/\s+/).filter(name => name);
+                if (players.length === 4) {
+                    players.forEach(player => {
+                        const currentCount = playerCounts.get(player) || 0;
+                        playerCounts.set(player, currentCount + 1);
+                    });
+                    return; // ✅ Don't push error, just count it
+                }
                 errors.push(`Line ${index + 1}: Invalid format. Could not find a score (e.g., 21-15).`);
-                return; // Skip lines without a valid score
+                return; 
             }
 
             // 3. Extract player names
